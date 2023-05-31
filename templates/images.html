@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>hello imagess</h1>
+{{request.user}}
+{% for mem in obj1 %}
+{% load static %}
+<img src="{{ mem.photo.url }}" alt="{{ mem.name }}">
+</br>
+{% endfor %}
+
+{% endblock %}
