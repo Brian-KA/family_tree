@@ -17,12 +17,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 # import settings
+from django.conf import settings
+from django.conf.urls.static import static
 
 from family_tree.views import family_member_view, family_form_view, home_view, images_view
 
 urlpatterns = [
     path('', home_view, name="home"),
-    path('images', images_view),
+    path('images/', images_view),
     path('home/', home_view),
     path('form/', family_form_view),
     path('member/', family_member_view),
@@ -36,6 +38,6 @@ urlpatterns = [
 
 # urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
-# if settings.DEBUG:
-    # urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
