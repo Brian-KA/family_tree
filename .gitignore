@@ -1,6 +1,10 @@
-/db.sqlite3
-/pyvenv.cfg
-/theme
-/Scripts
-/lib
+db.sqlite
+pyvenv.cfg
+theme/
+Scripts/
+lib/
 /Include
+/.idea
+__pycache__/
+
+
