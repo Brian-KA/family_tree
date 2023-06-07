@@ -1,0 +1,42 @@
+{% extends "admin/base.html" %}
+
+{% block extrahead %}
+    {{ block.super }}
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+   <script>
+$(document).ready(function() {
+var previousName = ''; // Keep track of the previous name value
+  $('#id_name').on('input', function() {
+    var name = $(this).val();
+    console.log("Current Name:", name); // Print the current name to the console
+
+    if (name.trim() === '') {
+      $('#id_parent').val('');
+      $('#id_siblings').val('');
+    } else if (name !== previousName) {
+      $.ajax({
+        url: '/check_family_member/',
+        data: {
+          'name': name
+        },
+        dataType: 'json',
+        success: function(data) {
+          if (data.exists) {
+            $('#id_parent').val(data.parent);
+            $('#id_siblings').val(data.siblings);
+          } else {
+            $('#id_parent').val('');
+            $('#id_siblings').val('');
+          }
+        }
+      });
+    }
+
+    previousName = name; // Update the previous name value
+  });
+});
+</script>
+
+{% endblock %}

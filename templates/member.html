@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    {% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard | Family</title>
+  <script src="https://kit.fontawesome.com/a1211d0a86.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="static/css/member.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/member.css' %}"/>
+</head>
+
+<body>
+
+  <div class="wrapper">
+    <div class="sidebar">
+      <h2>THE FAMILY</h2>
+      <ul>
+        <li><a href="#"><i class="fas fa-home"></i>Dashboard</a></li>
+        <li><a href="/tree"><i class="fas fa-people-group"></i>Family Tree</a></li>
+        <li class="active"><a href="/member"><i class="fas fa-user-plus"></i>Add Member</a></li>
+        <li><a href="/images"><i class="fas fa-image"></i>Gallery</a></li>
+      </ul>
+      <div class="logout">
+        <a href="#">Logout
+          <i class="fas  fa-arrow-right-from-bracket"></i></i>
+        </a>
+        <!-- <a href="#">Logout<i class="fab fa-instagram"></i></a> -->
+      </div>
+    </div>
+    <div class="main_content">
+      <div class="header">
+        <div class="search-bar">
+          <input type="text" class="form-control" placeholder="Search for members..." autocomplete="off">
+          <button class="search-button"><i class="fas fa-magnifying-glass"></i></button>
+        </div>
+        <div class="profile">
+          <i class="fas fa-bell"></i>
+          <div class="user">
+            <img class="user-photo" src="{% static "/images/profile.jpg" %}" alt="Robert Muhoho">
+          </div>
+        </div>
+      </div>
+      <div class="add-user">
+        <h2>Add Member</h2>
+        <div class="form-container">
+          <form method="" class="form">
+            <section class="section-one">
+              <div class="form-control">
+                <label for="name">Name</label><br>
+                <input type="text" id="name" placeholder="Name">
+
+              </div>
+              <div class="form-control">
+                <label for="name">Phone</label><br>
+                <input type="text" id="phone" placeholder="Phone">
+
+              </div>
+              <div class="form-control">
+                <label for="name">Email</label><br>
+                <input type="text" id="Email" placeholder="Email">
+              </div>
+              <button class="btn-member">
+                Add Member
+                <i style="margin-left: 10px;" class="fas fa-user-plus" aria-hidden="true"></i>
+              </button>
+            </section>
+            <section class="section-two">
+              <div class="column-2">
+                <div class="form-control">
+                  <label for="name">Date of Birth</label><br>
+                  <input type="text" id="dateofbirth" placeholder="Date of Birth">
+                </div>
+                <div class="form-control">
+                  <label for="name">Parents</label><br>
+                  <input type="text" id="parents" placeholder="Parents">
+                </div>
+              </div>
+            </section>
+            <section class="section-three">
+              <div class="user-photo">
+                <img class="user-image" src="{% static "/images/upload.jpg"%}" alt="Upload Image">
+                <button class="btn-image">
+                  Upload Image
+                  <i style="margin-left: 10px;" class="fas fa-upload" aria-hidden="true"></i>
+                </button>
+              </div>
+            </section>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+
+</html>
+{% endblock %}
