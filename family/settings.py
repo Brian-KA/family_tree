@@ -11,10 +11,14 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+import mimetypes
+
+mimetypes.add_type("text/css", ".css", True)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# NPM_BIN_PATH = "C:/Program Files/nodejs/npm.cmd" for tailwindcss
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
@@ -25,11 +29,18 @@ SECRET_KEY = 'django-insecure-4(noh!%7a)oek4!jof#wo38)vv1rlg(f69jc1lycsm#)pj8jx&
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True  # for development. change for deployment TODO
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
 
 # Application definition
 # added one app family tree created
+
+# configuring compressor for tailwindcss
+# COMPRESS_ROOT = BASE_DIR / 'static'
+#
+# COMPRESS_ENABLED = True
+#
+# STATICFILES_FINDERS = ('compressor.finders.CompressorFinder',)
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -38,13 +49,25 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'family_tree', 
+    'family_tree',
+    # for tailwindcss
+    # 'tailwind',
+    # 'theme',
+    # 'django_browser_reload'
+    # 'compressor', # for tailwindcss
 ]
+
+# TAILWIND_APP_NAME = 'theme'
+#
+# INTERNAL_IPS = [
+#     '127.0.0.1',
+# ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
+    # 'django_browser_reload.middleware.BrowserReloadMiddleware', # for tailwindcss
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -119,9 +142,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = BASE_DIR / 'static'
+STATICFILES_DIRS = [BASE_DIR / 'static']
+STATIC_ROOT = '/static/'
 MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
+MEDIA_ROOT = BASE_DIR / 'media/'
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field

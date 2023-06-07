@@ -1,12 +1,123 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>hello nigaas</h1>
-<!-- {{request.user}}</b> -->
-{{ niii }}: {{ alafu }}
-<ul>
-{% for item in null %}
-    <li>{{ item }}</li>
-{% endfor %}
-</ul>
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+  <title>Dashboard | Family</title>
+  <script src="https://kit.fontawesome.com/a1211d0a86.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}"/>
+</head>
+<body>
+
+<div class="wrapper">
+    <div class="sidebar">
+        <h2>THE FAMILY</h2>
+        <ul>
+            <li class="active"><a href="#"><i class="fas fa-home"></i>Dashboard</a></li>
+            <li><a href="/tree"><i class="fas fa-people-group"></i>Family Tree</a></li>
+            <li><a href="/member"><i class="fas fa-user-plus"></i>Add Member</a></li>
+            <li><a href="/images"><i class="fas fa-image"></i>Gallery</a></li>
+        </ul>
+        <div class="logout">
+          <a href="#">Logout
+            <i class="fas  fa-arrow-right-from-bracket"></i></i>
+          </a>
+          <!-- <a href="#">Logout<i class="fab fa-instagram"></i></a> -->
+      </div>
+    </div>
+    <div class="main_content">
+        <div class="header">
+          <div class="search-bar">
+            <input type="text" class="form-control" placeholder="Search for members..." autocomplete="off">
+            <button class="search-button"><i class="fas fa-magnifying-glass"></i></button>
+          </div>
+          <div class="profile">
+            <i class="fas fa-bell"></i>
+            <div class="user">
+              <img class="user-photo" src="{% static "/images/profile.jpg" %}" alt="Robert Muhoho">
+            </div>
+          </div>
+        </div>
+        <!-- //++++++++++++++++++++++++++++++++++++++++++++++++Cards End****************************************************************// -->
+        <div class="cards">
+          <div class="card-single">
+            <div>
+              <h3 class="heading">Total Members</h3>
+              <hr class="divider">
+              <h1>15</h1>
+            </div>
+          </div>
+          <div class="card-single">
+            <div>
+              <h3 class="heading">Deceased Members</h3>
+              <hr class="divider">
+              <h1>6</h1>
+            </div>
+          </div>
+        </div>
+
+        <!-- //////////////////////////////////////////////////////////////// Members Table ////////////////////////////////////////////////////////////////// -->
+        <div style="overflow-x:auto;" class="table-div">
+          <h3 style="margin-left:12px">Family Members</h3>
+          <table style="width: 100%;">
+            <tr>
+              <th>Name</th>
+              <th>Date of Birth</th>
+              <th>Phone</th>
+              <th>Email</th>
+              <th>Parents</th>
+            </tr>
+            <tr>
+              <td>Erastus Ngonyo Mumbi</td>
+              <td>17-12-1999</td>
+              <td>0745075832</td>
+              <td>chasingtech@gmail.com</td>
+              <td>Mr. & Mrs. Mwangi</td>
+            </tr>
+            <tr>
+              <td>Erastus Ngonyo Mumbi</td>
+              <td>17-12-1999</td>
+              <td>0745075832</td>
+              <td>chasingtech@gmail.com</td>
+              <td>Mr. & Mrs. Mwangi</td>
+            </tr>
+            <tr>
+              <td>Erastus Ngonyo Mumbi</td>
+              <td>17-12-1999</td>
+              <td>0745075832</td>
+              <td>chasingtech@gmail.com</td>
+              <td>Mr. & Mrs. Mwangi</td>
+            </tr>
+            <tr>
+              <td>Erastus Ngonyo Mumbi</td>
+              <td>17-12-1999</td>
+              <td>0745075832</td>
+              <td>chasingtech@gmail.com</td>
+              <td>Mr. & Mrs. Mwangi</td>
+            </tr>
+            <tr>
+              <td>Erastus Ngonyo Mumbi</td>
+              <td>17-12-1999</td>
+              <td>0745075832</td>
+              <td>chasingtech@gmail.com</td>
+              <td>Mr. & Mrs. Mwangi</td>
+            </tr>
+            <tr>
+              <td>Erastus Ngonyo Mumbi</td>
+              <td>17-12-1999</td>
+              <td>0745075832</td>
+              <td>chasingtech@gmail.com</td>
+              <td>Mr. & Mrs. Mwangi</td>
+            </tr>
+
+          </table>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
 {% endblock %}

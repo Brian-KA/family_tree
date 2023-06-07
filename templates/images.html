@@ -1,12 +1,105 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>hello imagess</h1>
-{{request.user}}
-{% for mem in obj1 %}
-{% load static %}
-<img src="{{ mem.photo.url }}" alt="{{ mem.name }}">
-</br>
-{% endfor %}
+    {% load static %}
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard | Family</title>
+  <script src="https://kit.fontawesome.com/a1211d0a86.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/static/css/gallery.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/gallery.css' %}"/>
+</head>
+
+<body>
+
+  <div class="wrapper">
+    <div class="sidebar">
+      <h2>THE FAMILY</h2>
+      <ul>
+        <li><a href="/"><i class="fas fa-home"></i>Dashboard</a></li>
+        <li><a href="/tree"><i class="fas fa-people-group"></i>Family Tree</a></li>
+        <li><a href="/member"><i class="fas fa-user-plus"></i>Add Member</a></li>
+        <li class="active"><a href="/images"><i class="fas fa-image"></i>Gallery</a></li>
+      </ul>
+      <div class="logout">
+        <a href="#">Logout
+          <i class="fas  fa-arrow-right-from-bracket"></i></i>
+        </a>
+        <!-- <a href="#">Logout<i class="fab fa-instagram"></i></a> -->
+      </div>
+    </div>
+    <div class="main_content">
+      <div class="header">
+        <div class="search-bar">
+          <input type="text" class="form-control" placeholder="Search for members..." autocomplete="off">
+          <button class="search-button"><i class="fas fa-magnifying-glass"></i></button>
+        </div>
+        <div class="profile">
+          <i class="fas fa-bell"></i>
+          <div class="user">
+            <img class="user-photo" src="{% static "/images/profile.jpg" %}" alt="Robert Muhoho">
+          </div>
+        </div>
+      </div>
+      <div class="gallery">
+        <h2 class="gallery-title">Family gallery</h2>
+        <hr class="gallery-line">
+        <div class="grid-container">
+          <div class="grid-item">
+            <image src="{% static "/images/Family (2).jpg"%}" style="width: 318px; height: 222px; border-radius: 10px;" class="image"
+              alt="Family 1">
+            </image>
+          </div>
+          <div class="grid-item">
+            <image src="{% static "/images/Family (4).jpg"%}" style="width: 318px; height: 222px; border-radius: 10px;" class="image"
+              alt="Family 1">
+            </image>
+          </div>
+          <div class="grid-item">
+            <image src="{% static "/images/Family.jpg"%}" style="width: 318px; height: 222px; border-radius: 10px;" class="image"
+              alt="Family 1">
+            </image>
+          </div>
+          <div class="grid-item">
+            <image src="{% static "/images/Family (1).jpg"%}" style="width: 318px; height: 222px; border-radius: 10px;" class="image"
+              alt="Family 1">
+            </image>
+          </div>
+          <div class="grid-item">
+            <image src="{% static "/images/Upload.jpg"%}" style="width: 318px; height: 222px; border-radius: 10px;" class="image"
+              alt="Family 1">
+            </image>
+          </div>
+          <div class="grid-item">
+            <image src="{% static "/images/Family (5).jpg"%}" style="width: 318px; height: 222px; border-radius: 10px;" class="image"
+              alt="Family 1">
+            </image>
+          </div>
+          <div class="grid-item">
+            <image src="{% static "/images/Family (6).jpg"%}" style="width: 318px; height: 222px; border-radius: 10px;" class="image"
+              alt="Family 1">
+            </image>
+          </div>
+          <div class="grid-item">
+            <image src="{% static "/images/Family (3).jpg"%}" style="width: 318px; height: 222px; border-radius: 10px;" class="image"
+              alt="Family 1">
+            </image>
+          </div>
+          <div class="grid-item">
+            <image src="{% static "/images/Family (1).jpg"%}" style="width: 318px; height: 222px; border-radius: 10px;" class="image"
+              alt="Family 1">
+            </image>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+
+</html>
 {% endblock %}
+

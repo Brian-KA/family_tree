@@ -15,20 +15,24 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 # import settings
 from django.conf import settings
 from django.conf.urls.static import static
-
-from family_tree.views import family_member_view, family_form_view, home_view, images_view
+from family_tree import views
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+from family_tree.views import family_member_view, family_form_view, home_view, images, tree
 
 urlpatterns = [
     path('', home_view, name="home"),
-    path('images/', images_view),
+    path('images/', images, name="images"),
     path('home/', home_view),
     path('form/', family_form_view),
     path('member/', family_member_view),
     path('admin/', admin.site.urls),
+    path('check_family_member/', views.check_family_member, name='check_family_member'),
+    # path('__reload__/', include('django_browser_reload.urls')), #, namespace='django_browser_reload' for tailwindcss
+    path('tree/', tree),
 ]
 
 
@@ -40,4 +44,5 @@ urlpatterns = [
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
