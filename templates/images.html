@@ -34,8 +34,10 @@
     <div class="main_content">
       <div class="header">
         <div class="search-bar">
-          <input type="text" class="form-control" placeholder="Search for members..." autocomplete="off">
-          <button class="search-button"><i class="fas fa-magnifying-glass"></i></button>
+         <form action="{% url 'images' %}" method="GET">
+        <input type="text" name="search" class="form-control" placeholder="Search for members..." autocomplete="off" value="{{ request.GET.search }}">
+        <button type="submit" class="search-button"><i class="fas fa-magnifying-glass"></i></button>
+    </form>
         </div>
         <div class="profile">
           <i class="fas fa-bell"></i>
@@ -45,55 +47,16 @@
         </div>
       </div>
       <div class="gallery">
-        <h2 class="gallery-title">Family gallery</h2>
-        <hr class="gallery-line">
-        <div class="grid-container">
-          <div class="grid-item">
-            <image src="{% static "/images/Family (2).jpg"%}" style="width: 318px; height: 222px; border-radius: 10px;" class="image"
-              alt="Family 1">
-            </image>
-          </div>
-          <div class="grid-item">
-            <image src="{% static "/images/Family (4).jpg"%}" style="width: 318px; height: 222px; border-radius: 10px;" class="image"
-              alt="Family 1">
-            </image>
-          </div>
-          <div class="grid-item">
-            <image src="{% static "/images/Family.jpg"%}" style="width: 318px; height: 222px; border-radius: 10px;" class="image"
-              alt="Family 1">
-            </image>
-          </div>
-          <div class="grid-item">
-            <image src="{% static "/images/Family (1).jpg"%}" style="width: 318px; height: 222px; border-radius: 10px;" class="image"
-              alt="Family 1">
-            </image>
-          </div>
-          <div class="grid-item">
-            <image src="{% static "/images/Upload.jpg"%}" style="width: 318px; height: 222px; border-radius: 10px;" class="image"
-              alt="Family 1">
-            </image>
-          </div>
-          <div class="grid-item">
-            <image src="{% static "/images/Family (5).jpg"%}" style="width: 318px; height: 222px; border-radius: 10px;" class="image"
-              alt="Family 1">
-            </image>
-          </div>
-          <div class="grid-item">
-            <image src="{% static "/images/Family (6).jpg"%}" style="width: 318px; height: 222px; border-radius: 10px;" class="image"
-              alt="Family 1">
-            </image>
-          </div>
-          <div class="grid-item">
-            <image src="{% static "/images/Family (3).jpg"%}" style="width: 318px; height: 222px; border-radius: 10px;" class="image"
-              alt="Family 1">
-            </image>
-          </div>
-          <div class="grid-item">
-            <image src="{% static "/images/Family (1).jpg"%}" style="width: 318px; height: 222px; border-radius: 10px;" class="image"
-              alt="Family 1">
-            </image>
-          </div>
+    <h2 class="gallery-title">Family gallery</h2>
+    <hr class="gallery-line">
+    <div class="grid-container">
+        {% for member in members %}
+        <div class="grid-item">
+            <img src="{{ member.photo.url }}" style="width: 318px; height: 222px; border-radius: 10px;" class="image" alt="{{ image.name }}">
         </div>
+        {% endfor %}
+    </div>
+</div>
       </div>
     </div>
   </div>

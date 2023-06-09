@@ -33,20 +33,26 @@ def family_member_view(request):
     #     "siblings": obj.siblings,
     # }
     # pick all member details for display
-    obj1 = FamilyMember.objects.all()
+    members = FamilyMember.objects.all()
+    print("members here are", members)
 
     # return render(request, "member/member.html", context)
-    return render(request, "member.html", {"obj1": obj1})
+    return render(request, "member.html", {"members": members})
 
 # first view on the page -> to be done TODO
-def home_view(request, *args, **kwagrs):
+def home_view(request):
     print(request.user)
-    nasty = {
-        "niii": "shit",
-        "alafu": 12,
-        "null": ["q", "e", "e", "r"]
-    }
-    return render(request, "home.html", nasty)
+    members = FamilyMember.objects.all()
+    total_members = members.count()
+    deceased_members = members.filter(dead=True).count()
+    query = request.GET.get('search')
+    if query:
+        members = members.filter(name__icontains=query)
+
+    return render(request, "home.html", {"members": members,
+                                         'total_members': total_members,
+                                         'deceased_members': deceased_members
+                                         })
     # return HttpResponse("<h1>Hello Nigga</h1>")
 
 # gallery view. fething all data from the database, pick
@@ -54,6 +60,11 @@ def home_view(request, *args, **kwagrs):
 def images(request, *args, **kwagrs):
     print(request.user)
     members = FamilyMember.objects.all()
+
+    query = request.GET.get('search')
+    if query:
+        members = members.filter(name__icontains=query)
+
     return render(request, "images.html", {"members": members})
     # return HttpResponse("<h1>Hello Nugus</h1>")
 

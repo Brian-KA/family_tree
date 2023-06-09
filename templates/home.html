@@ -31,8 +31,10 @@
     <div class="main_content">
         <div class="header">
           <div class="search-bar">
-            <input type="text" class="form-control" placeholder="Search for members..." autocomplete="off">
-            <button class="search-button"><i class="fas fa-magnifying-glass"></i></button>
+          <form action="{% url 'images' %}" method="GET">
+        <input type="text" name="search" class="form-control" placeholder="Search for members..." autocomplete="off" value="{{ request.GET.search }}">
+        <button type="submit" class="search-button"><i class="fas fa-magnifying-glass"></i></button>
+    </form>
           </div>
           <div class="profile">
             <i class="fas fa-bell"></i>
@@ -45,76 +47,49 @@
         <div class="cards">
           <div class="card-single">
             <div>
-              <h3 class="heading">Total Members</h3>
-              <hr class="divider">
-              <h1>15</h1>
+                <h3 class="heading">Total Members</h3>
+                <hr class="divider">
+                <h1>{{ total_members }}</h1>
             </div>
+
           </div>
           <div class="card-single">
             <div>
-              <h3 class="heading">Deceased Members</h3>
-              <hr class="divider">
-              <h1>6</h1>
-            </div>
+    <h3 class="heading">Deceased Members</h3>
+    <hr class="divider">
+    <h1>{{ deceased_members }}</h1>
+</div>
+
           </div>
         </div>
 
         <!-- //////////////////////////////////////////////////////////////// Members Table ////////////////////////////////////////////////////////////////// -->
         <div style="overflow-x:auto;" class="table-div">
-          <h3 style="margin-left:12px">Family Members</h3>
-          <table style="width: 100%;">
-            <tr>
-              <th>Name</th>
-              <th>Date of Birth</th>
-              <th>Phone</th>
-              <th>Email</th>
-              <th>Parents</th>
-            </tr>
-            <tr>
-              <td>Erastus Ngonyo Mumbi</td>
-              <td>17-12-1999</td>
-              <td>0745075832</td>
-              <td>chasingtech@gmail.com</td>
-              <td>Mr. & Mrs. Mwangi</td>
-            </tr>
-            <tr>
-              <td>Erastus Ngonyo Mumbi</td>
-              <td>17-12-1999</td>
-              <td>0745075832</td>
-              <td>chasingtech@gmail.com</td>
-              <td>Mr. & Mrs. Mwangi</td>
-            </tr>
-            <tr>
-              <td>Erastus Ngonyo Mumbi</td>
-              <td>17-12-1999</td>
-              <td>0745075832</td>
-              <td>chasingtech@gmail.com</td>
-              <td>Mr. & Mrs. Mwangi</td>
-            </tr>
-            <tr>
-              <td>Erastus Ngonyo Mumbi</td>
-              <td>17-12-1999</td>
-              <td>0745075832</td>
-              <td>chasingtech@gmail.com</td>
-              <td>Mr. & Mrs. Mwangi</td>
-            </tr>
-            <tr>
-              <td>Erastus Ngonyo Mumbi</td>
-              <td>17-12-1999</td>
-              <td>0745075832</td>
-              <td>chasingtech@gmail.com</td>
-              <td>Mr. & Mrs. Mwangi</td>
-            </tr>
-            <tr>
-              <td>Erastus Ngonyo Mumbi</td>
-              <td>17-12-1999</td>
-              <td>0745075832</td>
-              <td>chasingtech@gmail.com</td>
-              <td>Mr. & Mrs. Mwangi</td>
-            </tr>
+    <h3 style="margin-left:12px">Family Members</h3>
+    <table style="width: 100%;">
+        <tr>
+            <th>Name</th>
+            <th>Date of Birth</th>
+            <th>Phone</th>
+            <th>Email</th>
+            <th>Parents</th>
+        </tr>
+        {% for member in members %}
+        <tr>
+            <td>{{ member.name }}</td>
+            <td>{{ member.dob }}</td>
+            <td>{{ member.phone }}</td>
+            <td>{{ member.email }}</td>
+            <td>{{ member.parent }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="5">No family members found.</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
 
-          </table>
-        </div>
     </div>
 </div>
 
