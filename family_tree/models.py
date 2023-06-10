@@ -6,12 +6,15 @@ class FamilyMember(models.Model):
     name = models.CharField(max_length=100)
     photo = models.ImageField(upload_to='family_photos/')
     parent = models.CharField(max_length=100)
-    siblings = models.CharField(max_length=100)
+    siblings = models.ManyToManyField('self', blank=True)
     children = models.CharField(max_length=100)
     dob = models.DateField(default='')
     email = models.EmailField(default='')
     phone = models.CharField(max_length=100, default='')
     dead = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.name
 
 
 # create many to many relationship between family members here

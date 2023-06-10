@@ -34,7 +34,7 @@ def family_member_view(request):
     # }
     # pick all member details for display
     members = FamilyMember.objects.all()
-    print("members here are", members)
+    # print("members here are", members)
 
     # return render(request, "member/member.html", context)
     return render(request, "member.html", {"members": members})
@@ -69,11 +69,13 @@ def images(request, *args, **kwagrs):
     # return HttpResponse("<h1>Hello Nugus</h1>")
 
 def tree(request):
-    return render(request, "tree.html")
+    family_members = FamilyMember.objects.all()
+    context = {'family_members': family_members}
+    return render(request, "tree.html", context)
 
 def check_family_member(request):
     name = request.GET.get('name', '').strip()
-    print("Current Name:", name)  # Print the current name to the console
+    # print("Current Name:", name)  # Print the current name to the console
 
     response_data = {'exists': False, 'parent': '', 'siblings': ''}
 
