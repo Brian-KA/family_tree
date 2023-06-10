@@ -1,3 +1,4 @@
+from django.contrib.auth import authenticate, login
 from django.shortcuts import render
 from .models import FamilyMember
 from .forms import FamilyForm, RawFamilyForm
@@ -13,31 +14,66 @@ def family_form_view(request):
     }
     return render(request, "member/member_form.html", context)
 
+def login_view(request):
+    family_members = FamilyMember.objects.all()
+    total_members = family_members.count()
+    deceased_members = family_members.filter(dead=True).count()
+    query = request.GET.get('search')
+    if query:
+        family_members = family_members.filter(name__icontains=query)
 
-# def family_form_view(request):
-#     form = FamilyForm(request.POST or None)
-#     if form.is_valid():
-#         form.save()
-#         form = FamilyForm()
-#     context = {
-#         "form": form
-#     }
-#     return render(request, "member/member_form.html", context)
+    usernames = []
+    passwords = []
+    for member in family_members:
+        member_username = member.name
+        member_password = member.password
+        usernames.append(member_username)
+        passwords.append(member_password)
+    authentication_data = zip(usernames, passwords)
+
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        
+        for (uname, passd) in authentication_data:
+            
+            if username == uname and password == passd:
+                return render(request, 'home.html', {"members": family_members,
+                                         'total_members': total_members,
+                                         'deceased_members': deceased_members
+                                         })
+            else:
+                error_message = 'Invalid username or password'
+    else:
+        error_message = None
+    return render(request, 'login.html', {'error_message': error_message})
+
+def home_base_view(request):
+    family_members = FamilyMember.objects.all()[:3]
+    context = {'family_members': family_members}
+    return render(request, "homy.html", context)
 
 def family_member_view(request):
-    # test -> pick a specific member by id and display
-#     obj = FamilyMember.objects.get(id=2)
-    # context = {
-    #     "name": obj.name,
-    #     "parent": obj.parent,
-    #     "siblings": obj.siblings,
-    # }
-    # pick all member details for display
+    # members = FamilyMember.objects.get()
     members = FamilyMember.objects.all()
-    # print("members here are", members)
-
-    # return render(request, "member/member.html", context)
-    return render(request, "member.html", {"members": members})
+    current_user = request.user
+    member_objects = []
+    for member in members:
+        if member.name == current_user:
+            return member
+            # member_objects.append(member)
+    # member = [member for member in member_objects]
+    print(member)
+    # context = {"members": member}
+    context = {
+        "name": member.name,
+        "parents": member.parent,
+        "siblings": member.siblings,
+        "dob": member.dob,
+        "phone": member.phone,
+        "email": member.email,
+    }
+    return render(request, "member.html", context)
 
 # first view on the page -> to be done TODO
 def home_view(request):
@@ -53,7 +89,6 @@ def home_view(request):
                                          'total_members': total_members,
                                          'deceased_members': deceased_members
                                          })
-    # return HttpResponse("<h1>Hello Nigga</h1>")
 
 # gallery view. fething all data from the database, pick
 # images and display with a lil data
@@ -66,7 +101,6 @@ def images(request, *args, **kwagrs):
         members = members.filter(name__icontains=query)
 
     return render(request, "images.html", {"members": members})
-    # return HttpResponse("<h1>Hello Nugus</h1>")
 
 def tree(request):
     family_members = FamilyMember.objects.all()
@@ -75,8 +109,6 @@ def tree(request):
 
 def check_family_member(request):
     name = request.GET.get('name', '').strip()
-    # print("Current Name:", name)  # Print the current name to the console
-
     response_data = {'exists': False, 'parent': '', 'siblings': ''}
 
     siblings = FamilyMember.objects.filter(siblings__icontains=name)

@@ -45,7 +45,8 @@
           </div>
         </div>
       </div>
-       <div class="member-profile">
+    <div class="member-profile">
+        {% for member in members %}
     <div class="head">
         <h3>{{ member.name }}</h3>
         <a href="edit-profile.html">
@@ -83,6 +84,7 @@
             <img class="image" src="{{ member.photo.url }}" alt="Upload Image">
         </div>
     </div>
+    {% endfor %}
 </div>
 
     </div>

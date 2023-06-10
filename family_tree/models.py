@@ -11,6 +11,7 @@ class FamilyMember(models.Model):
     dob = models.DateField(default='')
     email = models.EmailField(default='')
     phone = models.CharField(max_length=100, default='')
+    password = models.CharField(max_length=100)
     dead = models.BooleanField(default=False)
 
     def __str__(self):

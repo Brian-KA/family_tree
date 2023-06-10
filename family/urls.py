@@ -21,12 +21,14 @@ from django.conf import settings
 from django.conf.urls.static import static
 from family_tree import views
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
-from family_tree.views import family_member_view, family_form_view, home_view, images, tree
+from family_tree.views import family_member_view, family_form_view, home_view, images, tree, home_base_view, login_view
 
 urlpatterns = [
-    path('', home_view, name="home"),
+    path('home/', home_view, name="home"),
     path('images/', images, name="images"),
-    path('home/', home_view),
+    path('', home_base_view),
+    # path('base/', home_base_view),
+    path('login/', login_view, name='login'),
     path('form/', family_form_view),
     path('member/', family_member_view),
     path('admin/', admin.site.urls),
