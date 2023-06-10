@@ -10,7 +10,7 @@
   <meta charset="UTF-8">
   <title>Dashboard | Family</title>
   <script src="https://kit.fontawesome.com/a1211d0a86.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="static/css/member.css">
+    <link rel="stylesheet" href="/static/css/member.css">
     <link rel="stylesheet" type="text/css" href="{% static 'css/member.css' %}"/>
 </head>
 
@@ -22,12 +22,12 @@
       <ul>
         <li><a href="/"><i class="fas fa-home"></i>Dashboard</a></li>
         <li><a href="/tree"><i class="fas fa-people-group"></i>Family Tree</a></li>
-        <li class="active"><a href="/member"><i class="fas fa-user-plus"></i>Add Member</a></li>
+        <li class="active"><a href="/member"><i class="fas fa-user"></i>Profile</a></li>
         <li><a href="/images"><i class="fas fa-image"></i>Gallery</a></li>
       </ul>
       <div class="logout">
         <a href="#">Logout
-          <i class="fas  fa-arrow-right-from-bracket"></i></i>
+          <i class="fas  fa-arrow-right-from-bracket"></i>
         </a>
         <!-- <a href="#">Logout<i class="fab fa-instagram"></i></a> -->
       </div>
@@ -45,58 +45,50 @@
           </div>
         </div>
       </div>
-      <div class="add-user">
-        <h2>Add Member</h2>
-        <div class="form-container">
-          <form method="" class="form">
-            <section class="section-one">
-              <div class="form-control">
-                <label for="name">Name</label><br>
-                <input type="text" id="name" placeholder="Name">
-
-              </div>
-              <div class="form-control">
-                <label for="name">Phone</label><br>
-                <input type="text" id="phone" placeholder="Phone">
-
-              </div>
-              <div class="form-control">
-                <label for="name">Email</label><br>
-                <input type="text" id="Email" placeholder="Email">
-              </div>
-              <button class="btn-member">
-                Add Member
-                <i style="margin-left: 10px;" class="fas fa-user-plus" aria-hidden="true"></i>
-              </button>
-            </section>
-            <section class="section-two">
-              <div class="column-2">
-                <div class="form-control">
-                  <label for="name">Date of Birth</label><br>
-                  <input type="text" id="dateofbirth" placeholder="Date of Birth">
-                </div>
-                <div class="form-control">
-                  <label for="name">Parents</label><br>
-                  <input type="text" id="parents" placeholder="Parents">
-                </div>
-              </div>
-            </section>
-            <section class="section-three">
-              <div class="user-photo">
-                <img class="user-image" src="{% static "/images/upload.jpg"%}" alt="Upload Image">
-                <button class="btn-image">
-                  Upload Image
-                  <i style="margin-left: 10px;" class="fas fa-upload" aria-hidden="true"></i>
-                </button>
-              </div>
-            </section>
-          </form>
-        </div>
-      </div>
+       <div class="member-profile">
+    <div class="head">
+        <h3>{{ member.name }}</h3>
+        <a href="edit-profile.html">
+            <button class="edit-button">
+                <i style="padding-right: 12px;" class="fa fa-edit"></i>
+                Edit Profile
+            </button>
+        </a>
     </div>
-  </div>
+    <hr style="opacity: 0.2;">
+    <div class="details">
+        <div class="left">
+            <div class="left-one" style="margin-right: 100px;">
+                <div class="dateofbirth">
+                    <h4 for="dateofbirth">Date of Birth</h4><br>
+                    {{ member.dob }}
+                </div>
+                <div class="phone">
+                    <h4 for="phone">Phone</h4><br>
+                    {{ member.phone }}
+                </div>
+            </div>
+            <div class="left-two">
+                <div class="email">
+                    <h4 for="email">Email</h4><br>
+                    {{ member.email }}
+                </div>
+                <div class="parents">
+                    <h4 for="parents">Parents</h4><br>
+                    {{ member.parent }}
+                </div>
+            </div>
+        </div>
+        <div class="right">
+            <img class="image" src="{{ member.photo.url }}" alt="Upload Image">
+        </div>
+    </div>
+</div>
 
+    </div>
+    </div>
 </body>
 
 </html>
+
 {% endblock %}

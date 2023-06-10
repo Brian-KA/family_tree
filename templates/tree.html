@@ -22,12 +22,12 @@
       <ul>
         <li><a href="/"><i class="fas fa-home"></i>Dashboard</a></li>
         <li class="active"><a href="/tree"><i class="fas fa-people-group"></i>Family Tree</a></li>
-        <li><a href="/member"><i class="fas fa-user-plus"></i>Add Member</a></li>
+        <li><a href="/member"><i class="fas fa-user"></i>Profile</a></li>
         <li><a href="/images"><i class="fas fa-image"></i>Gallery</a></li>
       </ul>
       <div class="logout">
         <a href="#">Logout
-          <i class="fas  fa-arrow-right-from-bracket"></i></i>
+          <i class="fas  fa-arrow-right-from-bracket"></i>
         </a>
         <!-- <a href="#">Logout<i class="fab fa-instagram"></i></a> -->
       </div>
@@ -45,12 +45,33 @@
           </div>
         </div>
       </div>
+
       <div class="tree">
-        <div class="family-tree">
-          <h3>Family Tree</h3>
-          <hr class="divider">
+    <div class="family-tree">
+        <h3>Family Tree</h3>
+        <hr class="divider">
+        <div class="cards">
+            {% for member in family_members %}
+            <div class="card">
+                <img src="{{ member.photo.url }}" alt="Avatar" style="width:100%">
+                <div class="container">
+                    <h3><b>{{ member.name }}</b></h3>
+                    <hr style="opacity: 0.2">
+                    <h4 style="margin-top: 12px; font-weight: 500;">Parents</h4>
+                    <p style="font-size: 12px; margin-top: 5px; color:#888">{{ member.parent }}</p>
+                    <h4 style="margin-top: 12px; font-weight: 500;">Siblings</h4>
+                    {% for sibling in member.siblings.all %}
+                    <p style="font-size: 12px; margin-top: 5px; color:#888; margin-bottom: 10px;">{{ sibling.name }}</p>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endfor %}
         </div>
-      </div>
+    </div>
+</div>
+
+
+
     </div>
   </div>
 
