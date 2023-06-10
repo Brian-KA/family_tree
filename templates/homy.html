@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ngambi family</title>
+    <script src="https://kit.fontawesome.com/a1211d0a86.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/static/css/tree.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/homy.css' %}"/>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>ngambi family archive</h1>
+            <nav>
+                <ul>
+                    <li><a href="/login/">Login</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <h2>Welcome to the ngambi family members website.</h2>
+    <div class="grid-container">
+        <!-- <div class="cards"> -->
+        
+            {% for member in family_members %}
+            <div class="grid-item">
+            <div class="card"> 
+                <img src="{{ member.photo.url }}" alt="Avatar" style="width:100%">
+                <div class="container">
+                    <h3><b>{{ member.name }}</b></h3>
+                    <hr style="opacity: 0.2">
+                    
+                </div>
+            </div>
+            </div>
+            {% endfor %}
+    </div>
+
+
+</body>
+</html>
+
+{% endblock %}

@@ -18,7 +18,7 @@
 
   <div class="wrapper">
     <div class="sidebar">
-      <h2>THE FAMILY</h2>
+      <h2>NGAMBI FAMILY</h2>
       <ul>
         <li><a href="/"><i class="fas fa-home"></i>Dashboard</a></li>
         <li class="active"><a href="/tree"><i class="fas fa-people-group"></i>Family Tree</a></li>
@@ -39,7 +39,6 @@
           <button class="search-button"><i class="fas fa-magnifying-glass"></i></button>
         </div>
         <div class="profile">
-          <i class="fas fa-bell"></i>
           <div class="user">
             <img class="user-photo" src="{% static "/images/profile.jpg" %}" alt="Robert Muhoho">
           </div>
@@ -50,9 +49,12 @@
     <div class="family-tree">
         <h3>Family Tree</h3>
         <hr class="divider">
-        <div class="cards">
+        <div class="grid-container">
+        <!-- <div class="cards"> -->
+        
             {% for member in family_members %}
-            <div class="card">
+            <div class="grid-item">
+            <div class="card"> 
                 <img src="{{ member.photo.url }}" alt="Avatar" style="width:100%">
                 <div class="container">
                     <h3><b>{{ member.name }}</b></h3>
@@ -65,8 +67,10 @@
                     {% endfor %}
                 </div>
             </div>
+            </div>
             {% endfor %}
-        </div>
+        <!-- </div> -->
+      </div>
     </div>
 </div>
 
