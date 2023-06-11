@@ -39,8 +39,10 @@
           <div class="profile">
             <i class="fas fa-bell"></i>
             <div class="user">
-              <img class="user-photo" src="{% static "/images/profile.jpg" %}" alt="Robert Muhoho">
-            </div>
+    <img class="user-photo" src="{{ user_photo_url }}" alt="{{ user_name }}">
+    <h4>{{ user_name }}</h4>
+</div>
+
           </div>
         </div>
         <!-- //++++++++++++++++++++++++++++++++++++++++++++++++Cards End****************************************************************// -->

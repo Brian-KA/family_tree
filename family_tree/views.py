@@ -1,8 +1,9 @@
 from django.contrib.auth import authenticate, login
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import FamilyMember
 from .forms import FamilyForm, RawFamilyForm
 from django.http import JsonResponse
+from django.contrib.auth import logout, login
 
 # this view takes data from the user and updates the database
 def family_form_view(request):
@@ -34,19 +35,29 @@ def login_view(request):
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
-        
+
         for (uname, passd) in authentication_data:
-            
+
             if username == uname and password == passd:
+                authenticated_user = FamilyMember.objects.get(name=username)
+                user_photo_url = authenticated_user.photo.url
+                user_name = authenticated_user.name
+
                 return render(request, 'home.html', {"members": family_members,
                                          'total_members': total_members,
-                                         'deceased_members': deceased_members
+                                         'deceased_members': deceased_members,
+                                                     'user_photo_url': user_photo_url,
+                                                     'user_name': user_name
                                          })
             else:
                 error_message = 'Invalid username or password'
     else:
         error_message = None
     return render(request, 'login.html', {'error_message': error_message})
+
+def logout_view(request):
+    logout(request)
+    return redirect('/')
 
 def home_base_view(request):
     family_members = FamilyMember.objects.all()[:3]

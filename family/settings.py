@@ -12,6 +12,9 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 import mimetypes
+import os
+import django_heroku
+import dj_database_url
 
 mimetypes.add_type("text/css", ".css", True)
 
@@ -29,7 +32,7 @@ SECRET_KEY = 'django-insecure-4(noh!%7a)oek4!jof#wo38)vv1rlg(f69jc1lycsm#)pj8jx&
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True  # for development. change for deployment TODO
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '*']
 
 
 # Application definition
@@ -152,3 +155,5 @@ MEDIA_ROOT = BASE_DIR / 'media/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+django_heroku.settings(locals())
