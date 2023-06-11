@@ -1,1 +1,2 @@
-web gunicorn family.wsgi:application --log-file -
+release: python manage.py migrate
+web: gunicorn family.wsgi
