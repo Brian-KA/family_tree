@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard | Family</title>
+  <link rel="stylesheet" href="/static/css/editprofile.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/editprofile.css' %}"/>
+  <script src="https://kit.fontawesome.com/a1211d0a86.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+
+  <div class="wrapper">
+    <div class="sidebar">
+      <h2>THE FAMILY</h2>
+        <ul>
+        <li><a href="{% url 'home' %}"><i class="fas fa-home"></i>Dashboard</a></li>
+        <li><a href="{% url 'tree' %}"><i class="fas fa-people-group"></i>Family Tree</a></li>
+        <li class="active"><a href="{% url 'editprofile' %}"><i class="fas fa-user"></i>Edit Profile</a></li>
+        <li><a href="{% url 'images' %}"><i class="fas fa-image"></i>Gallery</a></li>
+      </ul>
+
+      <div class="logout">
+        <a href="{% url 'logout' %}">Logout
+          <i class="fas  fa-arrow-right-from-bracket"></i></i>
+        </a>
+        <!-- <a href="#">Logout<i class="fab fa-instagram"></i></a> -->
+      </div>
+    </div>
+    <div class="main_content">
+      <div class="header">
+        <div class="search-bar">
+          <input type="text" class="form-control" placeholder="Search for members..." autocomplete="off">
+          <button class="search-button"><i class="fas fa-magnifying-glass"></i></button>
+        </div>
+        <div class="profile">
+          <!-- <i class="fas fa-bell"></i> -->
+          <div class="user">
+            <img class="user-photo" src={{ request.session.user_photo_url }} alt="{{ request.session.user_name }}">
+          </div>
+        </div>
+      </div>
+      <div class="add-user">
+        <h2>Edit Profile</h2>
+        <div class="form-container">
+          <form method="POST" class="form" action="{% url 'save_details' %}">
+              {% csrf_token %}
+            <section class="section-one">
+              <div class="form-control">
+                <label for="name">Username</label><br>
+                <input type="text" id="name" name="name" placeholder="username" value="{{ request.session.user_name }}">
+
+              </div>
+              <div class="form-control">
+                <label for="phone">Phone</label><br>
+                <input type="text" id="phone" name="phone" placeholder="Phone" value="{{ request.session.user_phone }}">
+
+              </div>
+              <div class="form-control">
+                <label for="email">Email</label><br>
+                <input type="text" id="Email" name="email" placeholder="Email" value="{{ request.session.user_email }}">
+              </div>
+              <button class="btn-member" type="submit">
+                Save Details
+                <i style="margin-left: 10px;" class="fas fa-user-plus" aria-hidden="true"></i>
+              </button>
+            </section>
+            <section class="section-two">
+              <div class="column-2">
+                <div class="form-control">
+                  <label for="dateofbirth">Date of Birth</label><br>
+                  <input type="text" name="dateofbirth" id="dateofbirth" placeholder="Date of Birth" value="{{ request.session.user_dob }}">
+                </div>
+                <div class="form-control">
+                  <label for="parents">Parents</label><br>
+                  <input type="text" name="parents" id="parents" placeholder="Parents" value="{{ request.session.user_parent }}">
+                </div>
+              </div>
+            </section>
+            <section class="section-three">
+              <div class="user-photo">
+                <img class="user-image" src="{{ request.session.user_photo_url }}" alt="Upload Image">
+                <button class="btn-image">
+                  Upload Image
+                  <i style="margin-left: 10px;" class="fas fa-upload" aria-hidden="true"></i>
+                </button>
+              </div>
+            </section>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+
+</html>
+{% endblock %}

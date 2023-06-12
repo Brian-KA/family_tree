@@ -20,19 +20,22 @@
     <div class="sidebar">
       <h2>THE FAMILY</h2>
       <ul>
-        <li><a href="/home"><i class="fas fa-home"></i>Dashboard</a></li>
-        <li><a href="/tree"><i class="fas fa-people-group"></i>Family Tree</a></li>
-        <li class="active"><a href="/member"><i class="fas fa-user"></i>Profile</a></li>
-        <li><a href="/images"><i class="fas fa-image"></i>Gallery</a></li>
+        <li><a href="{% url 'home' %}"><i class="fas fa-home"></i>Dashboard</a></li>
+        <li><a href="{% url 'tree' %}"><i class="fas fa-people-group"></i>Family Tree</a></li>
+        <li class="active"><a href="{% url 'member' %}"><i class="fas fa-user"></i>Profile</a></li>
+        <li><a href="{% url 'images' %}"><i class="fas fa-image"></i>Gallery</a></li>
       </ul>
       <div class="logout">
-        <a href="#">Logout
+        <a href="{% url 'logout' %}">Logout
           <i class="fas  fa-arrow-right-from-bracket"></i>
         </a>
         <!-- <a href="#">Logout<i class="fab fa-instagram"></i></a> -->
       </div>
     </div>
     <div class="main_content">
+{#{% if request.session.authenticated %}#}
+{#    <p>Welcome, {{ request.session.user_name }}!</p>#}
+{#{% endif %}#}
       <div class="header">
         <div class="search-bar">
           <input type="text" class="form-control" placeholder="Search for members..." autocomplete="off">
@@ -41,16 +44,15 @@
         <div class="profile">
           <i class="fas fa-bell"></i>
           <div class="user">
-    <img class="user-photo" src="{{ user_photo_url }}" alt="{{ user_name }}">
-    <h4>{{ user_name }}</h4>
+    <img class="user-photo" src={{ request.session.user_photo_url }} alt="{{ request.session.user_name }}">
+{#    <h4>{{ request.session.user_name }}</h4>#}
 </div>
         </div>
       </div>
     <div class="member-profile">
-        {% for member in members %}
     <div class="head">
-        <h3>{{ member.name }}</h3>
-        <a href="edit-profile.html">
+        <h3>{{ request.session.user_name }}</h3>
+        <a href="{% url 'editprofile' %}">
             <button class="edit-button">
                 <i style="padding-right: 12px;" class="fa fa-edit"></i>
                 Edit Profile
@@ -63,30 +65,30 @@
             <div class="left-one" style="margin-right: 100px;">
                 <div class="dateofbirth">
                     <h4 for="dateofbirth">Date of Birth</h4><br>
-                    {{ member.dob }}
+                    {{ request.session.user_dob }}
                 </div>
                 <div class="phone">
                     <h4 for="phone">Phone</h4><br>
-                    {{ member.phone }}
+                    {{ request.session.user_phone }}
                 </div>
             </div>
             <div class="left-two">
                 <div class="email">
                     <h4 for="email">Email</h4><br>
-                    {{ member.email }}
+                    {{ request.session.user_email }}
                 </div>
                 <div class="parents">
                     <h4 for="parents">Parents</h4><br>
-                    {{ member.parent }}
+                    {{ request.session.user_parent }}
                 </div>
             </div>
         </div>
         <div class="right">
-            <img class="image" src="{{ member.photo.url }}" alt="Upload Image">
+            <img class="image" src="{{ request.session.user_photo_url }}" alt="Upload Image">
         </div>
     </div>
-    {% endfor %}
 </div>
+
 
     </div>
     </div>

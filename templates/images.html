@@ -19,10 +19,10 @@
     <div class="sidebar">
       <h2>THE FAMILY</h2>
       <ul>
-        <li><a href="/home"><i class="fas fa-home"></i>Dashboard</a></li>
-        <li><a href="/tree"><i class="fas fa-people-group"></i>Family Tree</a></li>
-        <li><a href="/member"><i class="fas fa-user"></i>Profile</a></li>
-        <li class="active"><a href="/images"><i class="fas fa-image"></i>Gallery</a></li>
+        <li><a href="{% url 'home' %}"><i class="fas fa-home"></i>Dashboard</a></li>
+        <li><a href="{% url 'tree' %}"><i class="fas fa-people-group"></i>Family Tree</a></li>
+        <li><a href="{% url 'member' %}"><i class="fas fa-user"></i>Profile</a></li>
+        <li class="active"><a href="{% url 'images' %}"><i class="fas fa-image"></i>Gallery</a></li>
       </ul>
       <div class="logout">
         <a href="#">Logout
@@ -40,9 +40,9 @@
     </form>
         </div>
         <div class="profile">
-          <i class="fas fa-bell"></i>
+{#          <i class="fas fa-bell"></i>#}
           <div class="user">
-            <img class="user-photo" src="{% static "/images/profile.jpg" %}" alt="Robert Muhoho">
+            <img class="user-photo" src="{{ request.session.user_photo_url }}" alt="{{ request.session.user_name }}">
           </div>
         </div>
       </div>
