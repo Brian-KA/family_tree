@@ -4,6 +4,10 @@ from .models import FamilyMember
 from .forms import FamilyForm, RawFamilyForm
 from django.http import JsonResponse
 from django.contrib.auth import logout, login
+from functools import wraps
+from django.http import HttpResponseRedirect
+from django.core.serializers.json import DjangoJSONEncoder
+
 
 # this view takes data from the user and updates the database
 def family_form_view(request):
@@ -14,6 +18,7 @@ def family_form_view(request):
         "form": form
     }
     return render(request, "member/member_form.html", context)
+
 
 def login_view(request):
     family_members = FamilyMember.objects.all()
@@ -37,33 +42,62 @@ def login_view(request):
         password = request.POST['password']
 
         for (uname, passd) in authentication_data:
-
             if username == uname and password == passd:
                 authenticated_user = FamilyMember.objects.get(name=username)
                 user_photo_url = authenticated_user.photo.url
                 user_name = authenticated_user.name
+                user_dob = authenticated_user.dob.strftime('%Y-%m-%d')
+
+                request.session['authenticated'] = True
+                request.session['user_name'] = user_name
+                request.session['user_photo_url'] = user_photo_url
+                request.session['user_dob'] = user_dob
+                request.session['user_phone'] = authenticated_user.phone
+                request.session['user_email'] = authenticated_user.email
+                request.session['user_parent'] = authenticated_user.parent
 
                 return render(request, 'home.html', {"members": family_members,
-                                         'total_members': total_members,
-                                         'deceased_members': deceased_members,
+                                                     'total_members': total_members,
+                                                     'deceased_members': deceased_members,
                                                      'user_photo_url': user_photo_url,
                                                      'user_name': user_name
-                                         })
+                                                     })
             else:
                 error_message = 'Invalid username or password'
     else:
         error_message = None
     return render(request, 'login.html', {'error_message': error_message})
 
+
+def family_member_required(view_func):
+    @wraps(view_func)
+    def _wrapped_view(request, *args, **kwargs):
+        if request.session.get('authenticated'):
+            return view_func(request, *args, **kwargs)
+        else:
+            return HttpResponseRedirect('/login')
+
+    return _wrapped_view
+
+
 def logout_view(request):
-    logout(request)
-    return redirect('/')
+    if 'authenticated' in request.session:
+        del request.session['authenticated']
+    if 'user_name' in request.session:
+        del request.session['user_name']
+    if 'user_photo_url' in request.session:
+        del request.session['user_photo_url']
+
+    return redirect('login')
+
 
 def home_base_view(request):
     family_members = FamilyMember.objects.all()[:3]
     context = {'family_members': family_members}
     return render(request, "homy.html", context)
 
+
+@family_member_required
 def family_member_view(request):
     # members = FamilyMember.objects.get()
     members = FamilyMember.objects.all()
@@ -87,6 +121,7 @@ def family_member_view(request):
     return render(request, "member.html", context)
 
 # first view on the page -> to be done TODO
+@family_member_required
 def home_view(request):
     print(request.user)
     members = FamilyMember.objects.all()
@@ -101,8 +136,10 @@ def home_view(request):
                                          'deceased_members': deceased_members
                                          })
 
+
 # gallery view. fething all data from the database, pick
 # images and display with a lil data
+@family_member_required
 def images(request, *args, **kwagrs):
     print(request.user)
     members = FamilyMember.objects.all()
@@ -113,10 +150,69 @@ def images(request, *args, **kwagrs):
 
     return render(request, "images.html", {"members": members})
 
+
+@family_member_required
 def tree(request):
     family_members = FamilyMember.objects.all()
     context = {'family_members': family_members}
     return render(request, "tree.html", context)
+
+
+@family_member_required
+def editprofile(request):
+    family_members = FamilyMember.objects.all()
+    context = {'family_members': family_members}
+    return render(request, "editprofile.html", context)
+
+
+def edit_profile(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        phone = request.POST['phone']
+        email = request.POST['email']
+        date_of_birth = request.POST['dateofbirth']
+        parents = request.POST['parents']
+
+        if request.session.get('authenticated'):
+            user_name = request.session['user_name']
+            authenticated_user = FamilyMember.objects.get(name=user_name)
+            authenticated_user.name = username
+            authenticated_user.phone = phone
+            authenticated_user.email = email
+            authenticated_user.dob = date_of_birth
+            authenticated_user.parent = parents
+            authenticated_user.save()
+
+            request.session['user_name'] = username
+            request.session['user_phone'] = phone
+            request.session['user_email'] = email
+            request.session['user_dob'] = date_of_birth
+            request.session['user_parent'] = parents
+
+            return redirect('home')
+
+    return render(request, 'editprofile.html')
+
+
+def save_details(request):
+    if request.method == 'POST':
+        if request.session.get('authenticated'):
+            user_name = request.session['user_name']
+            authenticated_user = FamilyMember.objects.get(name=user_name)
+
+            authenticated_user.phone = request.POST['phone']
+            authenticated_user.email = request.POST['email']
+            authenticated_user.dob = request.POST['dateofbirth']
+            authenticated_user.parent = request.POST['parents']
+            authenticated_user.save()
+
+            request.session['user_phone'] = authenticated_user.phone
+            request.session['user_email'] = authenticated_user.email
+            request.session['user_dob'] = authenticated_user.dob
+            request.session['user_parent'] = authenticated_user.parent
+
+    return redirect('member')
+
 
 def check_family_member(request):
     name = request.GET.get('name', '').strip()

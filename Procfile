@@ -1,2 +1,2 @@
-release: python manage.py migrate && DJANGO_SUPERUSER_PASSWORD=chasin@98! python manage.py createsuperuser --noinput --username=admin --email=njiruclinton@gmail.com
+release: python manage.py migrate && python manage.py shell -c "from django.contrib.auth.models import User; User.objects.filter(is_superuser=True).exists() or User.objects.create_superuser('admin', 'njiruclinton@gmail.com', 'chasin@98!')"
 web: gunicorn family.wsgi

@@ -21,21 +21,23 @@ from django.conf import settings
 from django.conf.urls.static import static
 from family_tree import views
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
-from family_tree.views import family_member_view, family_form_view, home_view, images, tree, home_base_view, login_view, logout_view
+from family_tree.views import family_member_view, family_form_view, home_view, images, tree, home_base_view, login_view, logout_view, editprofile
 
 urlpatterns = [
     path('home/', home_view, name="home"),
     path('images/', images, name="images"),
-    path('', home_base_view),
+    path('', home_base_view, name="home_base"),
     # path('base/', home_base_view),
     path('login/', login_view, name='login'),
     path('logout/', logout_view, name='logout'),
     path('form/', family_form_view),
-    path('member/', family_member_view),
+    path('member/', family_member_view, name='member'),
     path('admin/', admin.site.urls),
     path('check_family_member/', views.check_family_member, name='check_family_member'),
     # path('__reload__/', include('django_browser_reload.urls')), #, namespace='django_browser_reload' for tailwindcss
-    path('tree/', tree),
+    path('tree/', tree, name='tree'),
+    path('editprofile/', editprofile, name='editprofile'),
+    path('save_details/', views.save_details, name='save_details'),
 ]
 
 

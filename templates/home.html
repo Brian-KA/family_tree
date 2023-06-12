@@ -16,10 +16,10 @@
     <div class="sidebar">
         <h2>THE FAMILY</h2>
         <ul>
-            <li class="active"><a href="#"><i class="fas fa-home"></i>Dashboard</a></li>
-            <li><a href="/tree"><i class="fas fa-people-group"></i>Family Tree</a></li>
-            <li><a href="/member"><i class="fas fa-user"></i>Profile</a></li>
-            <li><a href="/images"><i class="fas fa-image"></i>Gallery</a></li>
+            <li class="active"><a href="{% url 'home' %}"><i class="fas fa-home"></i>Dashboard</a></li>
+            <li><a href="{% url 'tree' %}"><i class="fas fa-people-group"></i>Family Tree</a></li>
+            <li><a href="{% url 'member' %}"><i class="fas fa-user"></i>Profile</a></li>
+            <li><a href="{% url 'images' %}"><i class="fas fa-image"></i>Gallery</a></li>
         </ul>
         <div class="logout">
           <a href="#">Logout
@@ -29,6 +29,7 @@
       </div>
     </div>
     <div class="main_content">
+
         <div class="header">
           <div class="search-bar">
           <form action="{% url 'images' %}" method="GET">
@@ -37,10 +38,9 @@
     </form>
           </div>
           <div class="profile">
-            <i class="fas fa-bell"></i>
+{#            <i class="fas fa-bell"></i>#}
             <div class="user">
-    <img class="user-photo" src="{{ user_photo_url }}" alt="{{ user_name }}">
-    <h4>{{ user_name }}</h4>
+    <img class="user-photo" src="{{ request.session.user_photo_url }}" alt="{{ request.session.user_name }}">
 </div>
 
           </div>
